@@ -18,7 +18,8 @@ function App() {
   const [repoData, setrepoData] = useState([]);
   const [paginate, setPaginate] = useState(1);
   const [expanded, setExpanded] = useState(null);
-  const [chartData, setChartData] = useState();
+  const [loading, setLoading] = useState(false);
+  // const [chartData, setChartData] = useState();
 
   // fetching API data
   useEffect(() => {
@@ -42,25 +43,29 @@ function App() {
     fetchApi();
   }, [paginate]);
 
-  // fetching Chart Data
-  useEffect(()=>{
+
+  useEffect(() => {
     async function fetchCodeFrequency(owner, repo) {
+      if (!owner || !repo) return; // 🛡️ prevent undefined errors
+      setLoading(true);
       const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/stats/code_frequency`);
       const data = await res.json();
       if (!Array.isArray(data)) return null;
-    
+  
       const weeks = data.map(week => new Date(week[0] * 1000).toLocaleDateString());
       const additions = data.map(week => week[1]);
       const deletions = data.map(week => Math.abs(week[2]));
-    
+  
       return { weeks, additions, deletions };
     }
-    repoData.forEach(async (repo, index) => {
-      if (expanded === index) {
-        const result = await fetchCodeFrequency(repo.owner.login, repo.name);
+  
+    if (expanded !== null && repoData[expanded]) {
+      const repo = repoData[expanded];
+  
+      fetchCodeFrequency(repo.owner.login, repo.name).then(result => {
         if (!result) return;
-    
-        Highcharts.chart(`chart-container-${index}`, {
+  
+        Highcharts.chart(`chart-container-${expanded}`, {
           title: {
             text: `${repo.name} – Total Changes`,
             align: 'center',
@@ -85,10 +90,57 @@ function App() {
             }
           ]
         });
-      }
-    });
-    fetchCodeFrequency();  
-  },)
+      });
+    }
+  }, [expanded, repoData]);
+  // fetching Chart Data
+
+  // useEffect(()=>{
+  //   async function fetchCodeFrequency(owner, repo) {
+  //     const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/stats/code_frequency`);
+  //     const data = await res.json();
+  //     if (!Array.isArray(data)) return null;
+    
+  //     const weeks = data.map(week => new Date(week[0] * 1000).toLocaleDateString());
+  //     const additions = data.map(week => week[1]);
+  //     const deletions = data.map(week => Math.abs(week[2]));
+    
+  //     return { weeks, additions, deletions };
+  //   }
+  //   repoData.forEach(async (repo, index) => {
+  //     if (expanded === index) {
+  //       const result = await fetchCodeFrequency(repo.owner.login, repo.name);
+  //       if (!result) return;
+    
+  //       Highcharts.chart(`chart-container-${index}`, {
+  //         title: {
+  //           text: `${repo.name} – Total Changes`,
+  //           align: 'center',
+  //         },
+  //         xAxis: {
+  //           categories: result.weeks,
+  //           title: { text: 'Week' }
+  //         },
+  //         yAxis: {
+  //           title: { text: 'Number of Changes' }
+  //         },
+  //         series: [
+  //           {
+  //             name: 'Additions',
+  //             data: result.additions,
+  //             color: '#28a745',
+  //           },
+  //           {
+  //             name: 'Deletions',
+  //             data: result.deletions,
+  //             color: '#d73a49',
+  //           }
+  //         ]
+  //       });
+  //     }
+  //   });
+  //   fetchCodeFrequency();  
+  // },)
   
   
 // useEffect((index) => {
@@ -180,7 +232,7 @@ function App() {
       <Container fixed>
         {repoData.map((repo, index) => {
           return (
-            <div class="mt-3" key={index}>
+            <div className="mt-3" key={index}>
               <Accordion expanded={expanded===index} onChange={() => setExpanded(expanded === index ? null : index)} class="accordion">
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
@@ -200,7 +252,13 @@ function App() {
                   </div>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <div id={`chart-container-${index}`} style={{ width: '100%', height: '400px' }}></div>
+                {expanded === index && loading ? (
+                    <div className="text-center">
+                      <span className="spinner-border text-primary" role="status"></span>
+                    </div>
+                  ) : (
+                    <div id={`chart-container-${index}`} style={{ width: '100%', height: '400px' }} />
+                  )}
                 </AccordionDetails>
               </Accordion>
             </div>
