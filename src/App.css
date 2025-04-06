@@ -1,38 +1,169 @@
-.App {
-  text-align: center;
+/* Font size */
+.f-9 {
+  font-size: 9px !important;
+  line-height: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.f-10 {
+  font-size: 10px !important;
+  line-height: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.f-11 {
+  font-size: 11px !important;
+  line-height: normal;
+}
+
+.f-12 {
+  font-size: 12px !important;
+  line-height: normal;
+}
+
+.f-13 {
+  font-size: 13px !important;
+  line-height: normal;
+}
+
+.f-14 {
+  font-size: 14px !important;
+  line-height: normal;
+}
+
+.f-15 {
+  font-size: 15px !important;
+  line-height: normal;
+}
+
+.f-16 {
+  font-size: 16px !important;
+  line-height: normal;
+}
+
+.f-17 {
+  font-size: 17px !important;
+  line-height: normal;
+}
+
+.f-18 {
+  font-size: 18px !important;
+  line-height: normal;
+}
+
+.f-19 {
+  font-size: 19px !important;
+  line-height: normal;
+}
+
+.f-20 {
+  font-size: 20px !important;
+  line-height: normal;
+}
+
+.f-21 {
+  font-size: 21px !important;
+  line-height: normal;
+}
+
+.f-22 {
+  font-size: 22px !important;
+  line-height: normal;
+}
+
+.f-23 {
+  font-size: 23px !important;
+  line-height: normal;
+}
+
+.f-24 {
+  font-size: 24px !important;
+  line-height: normal;
+}
+
+.f-25 {
+  font-size: 25px !important;
+  line-height: normal;
+}
+
+.f-28 {
+  font-size: 28px !important;
+  line-height: normal;
+}
+.f-30 {
+  font-size: 30px !important;
+  line-height: normal;
+}
+.f-36{
+    font-size: 36px !important;
+    line-height: normal;
+}
+.f-48{
+    font-size: 48px !important;
+    line-height: normal;
+}
+.f-64{
+    font-size: 64px !important;
+    line-height: normal;
+}
+
+/* font-weight */
+
+.f-200{
+    font-weight: 200 !important;
+}
+.f-300 {
+  font-weight: 300 !important;
+}
+
+.f-400 {
+  font-weight: 400 !important;
+}
+
+.f-500 {
+  font-weight: 500 !important;
+}
+
+.f-600 {
+  font-weight: 600 !important;
+}
+
+.f-700 {
+  font-weight: 700 !important;
+}
+
+.f-800 {
+  font-weight: 800 !important;
+}
+.flex-center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.justify-content-space-around{
+    justify-content: space-around !important;
+}
+
+.avatar-img{
+  height: 90px;
+  border-radius: 100px;
+}
+.accordion, .MuiAccordion-root{
+  border: 1px solid grey !important;
+  border-radius: 10px !important;
+  box-shadow: unset !important;
+  background-color: rgb(235, 235, 235) !important;
+}
+.stars svg{
+  color: goldenrod;
+}
+@media (max-width:600px) {
+  .avatar-img{
+    height: 80px;
+    border-radius: 100px;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  .f-25{
+    font-size: 18px !important;
   }
-  to {
-    transform: rotate(360deg);
+  .f-16{
+    font-size: 14px !important;
   }
 }
